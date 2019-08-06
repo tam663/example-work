@@ -1,5 +1,6 @@
 import numpy as np
 import random
 
-a = np.zeros((10, 2))
-print(a)
+
+arr = [1, 2, 3, 4]
+print(arr.index(max(arr)))

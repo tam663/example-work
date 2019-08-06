@@ -16,70 +16,91 @@ class neuralnetwork():
         for i in range(len(self.shape) - 1):
             self.weights.append(np.random.randn(self.shape[i + 1], self.shape[i]))
         for i in range(len(self.shape) - 1):
-            self.biases.append(np.random.randn(self.shape[i + 1]))
+            self.biases.append(np.random.randn(self.shape[i + 1], 1))
 
-    def stocastic_gradient_descent(self, training_i, training_l, test_i, test_l, epochs, step_size, sample_size):
+    def stocastic_gradient_descent(self, training_i, training_l, epochs, step_size, sample_size):
         for i in range(epochs):
+            # print('epoch:', i)
+            # Randomly choose a selection of data from the input images and labels to train the network via stocstic gradient descent.
             sample_i, sample_l = self.sample_data(training_i, training_l, sample_size)
-            # Use backpropogation algorithm to calculate the change in weights and biases from each data set in
-            # 'sample_i' and then take the average of these values.
+            for i in range(len(sample_l)):
+                print(sample_l[i])
+            # Convert the training labels (which are initally given as a digit 0-9) in the sample into a vector form, where the value of
+            # ith indice is set to one and i is the number label for the image.
             sample_l_vector = []
             for i in range(len(sample_l)):
                 empty = np.zeros(10)
                 empty[sample_l[i]] = 1
                 sample_l_vector.append(empty)
+
+            # Data containers for adjusting the weights and biases.
+            delta_b = []
+            delta_w = []
+            delta_ws = []
+            for i in range(len(self.shape) - 1):
+                delta_w.append(np.random.randn(self.shape[i + 1], self.shape[i]))
+            for i in range(len(self.shape) - 1):
+                delta_b.append(np.random.randn(self.shape[i + 1], 1))
+            for i in range(len(self.shape) - 1):
+                delta_ws.append(np.random.randn(self.shape[i + 1], self.shape[i]))
+
+            # Carry out forward then backward propagation for each sample
             for k in range(sample_size):
-                print(k)
-                layer_acivity_out = []
-                z_values = []
-                delta_b = []
-                delta_w = []
-                for i in range(len(self.shape) - 1):
-                    delta_w.append(np.random.randn(self.shape[i + 1], self.shape[i]))
-                for i in range(len(self.shape) - 1):
-                    delta_b.append(np.random.randn(self.shape[i + 1]))
-                # First layer of neural network returns simply the image data as output
-                layer_acivity_out.append(sample_i[k])
-                # Second layer input is the product of the weighting factor and first layer output plus the bias
-                z_values.append(np.dot(self.weights[0], sample_i[k]) + self.biases[0])
-                layer_acivity_out.append(sigmoid(z_values[0]))
+                # print("higher iteration:", k)
+                z_values, acivity_out, activations = self.forwardpropagation(sample_i[k], training=True)
+                error = self.backpropagation(acivity_out, z_values, sample_l_vector[k])
+                activations.insert(0, sample_i[k])
 
-                # For a general layer j the input is the output activation from the previous layer:
-                for j in range(1, self.no_layers - 1):
-                    z = np.dot(self.weights[j], layer_acivity_out[j]) + self.biases[j]
-                    layer_acivity_out.append(sigmoid(z))
-                    z_values.append(z)
+                for i in range(1, self.no_layers - 1):
+                    delta_ws[i] = [d * a for d, a in zip(activations[i - 1], error[i])]
+                delta_w = [dw + dws for dw, dws in zip(delta_w, delta_ws)]
+                delta_b = [db + dbs for db, dbs in zip(delta_b, error)]
 
-                delta_w_s, delta_b_s = self.backpropagation(sample_l_vector[k], layer_acivity_out, z_values)
-                delta_w = [dw + dws for dw, dws in zip(delta_w, delta_w_s)]
-                delta_b = [db + dbs for db, dbs in zip(delta_b, delta_b_s)]
+        # Adjust weights and biases:
+        self.weights = [w - dw * (step_size / sample_size) for w, dw in zip(self.weights, delta_w)]
+        self.biases = [b - db * (step_size / sample_size) for b, db in zip(self.biases, delta_b)]
+        print("Network trained.")
 
-            # Adjust weights and biases:
-            self.weights = [w + dw * (step_size / sample_size) for w, dw in zip(self.weights, delta_w)]
-            self.biases = [b + db * (step_size / sample_size) for b, dw in zip(self.biases, delta_b)]
-        print('network trained')
+    def forwardpropagation(self, image_in, training):
+        zs = []
+        activations = []
+        # 1st layer of network takes image_in as input:
+        wx = np.dot(self.weights[0], image_in)
+        z = [sum(x) for x in zip(wx, self.biases[0])]
+        zs.append(z)
+        activation = [sigmoid(x) for x in z]
+        activations.append(activation)
 
-    def backpropagation(self, sample_l, layer_acivity_out, z_values):
-        delta_b = []
-        delta_w = []
-        for i in range(len(self.shape) - 1):
-            delta_w.append(np.random.randn(self.shape[i + 1], self.shape[i]))
-        for i in range(len(self.shape) - 1):
-            delta_b.append(np.random.randn(self.shape[i + 1]))
+        for i in range(1, self.no_layers - 1):
+            # print("iteration:", i)
+            wx = np.dot(self.weights[i], activation)
+            # print(np.shape(wx))
+            # print(np.shape(self.biases[i]))
+            z = [sum(x) for x in zip(wx, self.biases[i])]
+            zs.append(z)
+            activation = [sigmoid(x) for x in z]
+            activations.append(activation)
+        if training == True:
+            return zs, activation, activations
+        if training == False:
+            return activation
 
-        print(np.shape(layer_acivity_out[-1]))
-        delta_b[-1] = cost_derivative(sample_l, layer_acivity_out[-1]) * dif_sigmoid(z_values[- 1])
-        delta_w[-1] = np.dot(delta_b[-1], layer_acivity_out[-2].transpose())
-
+    def backpropagation(self, acivity_out, z_values, label):
+        error = []
+        # Error in final error:
+        difference = [np.subtract(x, y) for x, y in zip(acivity_out, label)]
+        diferential = [dif_sigmoid(x) for x in z_values[-1]]
+        delta = np.multiply(difference, diferential)
+        error.append(delta)
+        error_previous_layer = delta
+        # Error in ith layer:
         for i in range(2, self.no_layers):
-            print(i)
-            error_previous_layer = np.multiply(cost_derivative(layer_acivity_out[-i + 1], layer_acivity_out[-i + 1]), dif_sigmoid(z_values[-i + 1]))
-            delta_b[-i] = np.multiply(np.dot(self.weights[-i + 1].transpose(), error_previous_layer), dif_sigmoid(z_values[-i]))
-            delta_w[-i] = np.multiply(np.dot(self.weights[-i + 1].transpose(), error_previous_layer), dif_sigmoid(z_values[-i])) * layer_acivity_out[-i]
-        for i in range(2):
-            print('w:', np.shape(delta_w[i]), np.shape(self.weights[i]))
-            print('b', np.shape(delta_b[i]), np.shape(self.biases[i]))
-        return delta_w, delta_b
+            difference = np.dot(self.weights[-i + 1].transpose(), error_previous_layer)
+            diferential = [dif_sigmoid(x) for x in z_values[-i]]
+            delta = np.multiply(difference, diferential)
+            error.insert(0, delta)
+            error_previous_layer = delta
+        return error
 
     def sample_data(self, training_i, training_l, sample_size):
         sample_i = []
@@ -91,6 +112,26 @@ class neuralnetwork():
         sample_ia = np.array(sample_i)
         sample_la = np.array(sample_l)
         return sample_ia, sample_la
+
+    def analyse(self, data_in, labels):
+        right = 0
+        wrong = 0
+        # Input data to network:
+        for j in range(len(data_in)):
+
+            out = self.forwardpropagation(data_in[j], training=False)
+            # for i in range(len(out)):
+            #     if out[i] != np.max(out):
+            #         out[i] = 0
+            #     else:
+            #         out[i] = 1
+            out_list = list(out)
+            # print(out.index(max(out_list)), labels[j])
+            if out.index(max(out_list)) != labels[j]:
+                wrong += 1
+            else:
+                right += 1
+        print("Data classified. Percenage accuracy = {}%".format(100 * right / (wrong + right)))
 
 
 ''' load_data is used to retrive the handwritten number samples form the MNIST database.The data is
@@ -132,5 +173,6 @@ training_data, validation_data, test_data = load_data()
 training_images, training_labels = training_data
 validation_images, validation_labels = validation_data
 test_images, test_labels = test_data
-
-net.stocastic_gradient_descent(training_images, training_labels, test_images, test_labels, 10, 1, 10)
+net.stocastic_gradient_descent(training_images, training_labels, 1, 3, 100)
+# print(test_images[0])
+net.analyse(training_images, training_labels)
