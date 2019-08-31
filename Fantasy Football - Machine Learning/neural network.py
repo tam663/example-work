@@ -1,22 +1,18 @@
 """(5) definition of neural network model. """
 
 import time
-from data_sequencer import Load_data
 import tensorflow as tf
 from tensorflow.keras.models import Sequential
 from tensorflow.keras.layers import Dense, Dropout, LSTM, BatchNormalization
 from tensorflow.keras.callbacks import TensorBoard
 from tensorflow.keras.callbacks import ModelCheckpoint
-
-# Variables
-# TIME_PERIOD = 3
-# EPOCHS = 10  # how many passes through our data
-# BATCH_SIZE = 64
+from data_sequencer import Sequence_data
+from data_scaling import classify, Scale_columns
 
 
-def Network(TIME_PERIOD, EPOCHS, BATCH_SIZE, LTSM_SHAPE):
+def Network(directory, TIME_PERIOD, EPOCHS, BATCH_SIZE, LTSM_SHAPE):
     # Get data:
-    IN, OUT = Load_data('processed_data_2', TIME_PERIOD)
+    IN, OUT = Sequence_data(directory, TIME_PERIOD)
     length = len(OUT)
     train_x = IN[:int(0.9 * length)]
     validation_x = IN[int(0.9 * length):]
@@ -24,7 +20,7 @@ def Network(TIME_PERIOD, EPOCHS, BATCH_SIZE, LTSM_SHAPE):
     validation_y = OUT[int(0.9 * length):]
 
     # Define Network & callback:
-    NAME = f"tvb_{TIME_PERIOD}_{EPOCHS}_{BATCH_SIZE}_{LTSM_SHAPE}_{time.time()}"
+    NAME = f"pb_{TIME_PERIOD}_{EPOCHS}_{BATCH_SIZE}_{LTSM_SHAPE}_{time.time()}"
     ternsorboard = TensorBoard(log_dir=f"logs/{NAME}")
 
     model = Sequential()
@@ -59,11 +55,6 @@ def Network(TIME_PERIOD, EPOCHS, BATCH_SIZE, LTSM_SHAPE):
     model.save(f"models/{NAME}")
 
 
-# TIME_PERIOD, EPOCHS, BATCH_SIZE, LTSM_SHAPE = 5, 20, 32, 128
-# Network(TIME_PERIOD, EPOCHS, BATCH_SIZE, LTSM_SHAPE)
-
-# for TIME_PERIOD in [3,5,10]:
-#     for EPOCHS in [5,10,20]:
-#         for BATCH_SIZE in [16,32,64,128]:
-#             for LTSM_SHAPE in [64,128,254]:
-#                 Network(TIME_PERIOD, EPOCHS, BATCH_SIZE, LTSM_SHAPE)
+# dir_pa = Scale_columns(network_type='performance_based')
+TIME_PERIOD, EPOCHS, BATCH_SIZE, LTSM_SHAPE = 3, 20, 32, 128
+Network('new_scaled_data_performance_based_2019-08-31', TIME_PERIOD, EPOCHS, BATCH_SIZE, LTSM_SHAPE)

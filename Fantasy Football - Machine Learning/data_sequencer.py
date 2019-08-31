@@ -11,14 +11,15 @@ import random
 passed_dir = 'processed_data_2'
 
 
-def Load_data(passed_directory, length):
+def Sequence_data(passed_directory, length):
     SEQ_LEN = length
     sequential_data = []  # this is a list that will CONTAIN the sequences
     directory = os.path.dirname(os.path.abspath(__file__))
     for filename in os.listdir(f"{directory}/{passed_directory}"):
         if filename.endswith(".csv"):
             df = pd.read_csv(f"{directory}/{passed_directory}/{filename}", index_col="round")
-            input_df = df[["transfers_in", "transfers_out", "minutes", "target_points"]]
+            # nput_df = df[["transfers_in", "transfers_out", "minutes", "target_points"]] #performance predictior network from "transfers_in", "transfers_out", "minutes"
+            input_df = df[['bps', 'ict_index', 'minutes', 'target_points']]  # performance predictior network from 'bps', 'ict_index', 'minutes'
             prev_days = deque(maxlen=SEQ_LEN)  # These will be our actual sequences. They are made with deque, which keeps the maximum length by popping out older values as new ones come in
             for i in input_df.values:  # iterate over the values
                 prev_days.append([n for n in i[:-1]])  # store all but the target
@@ -64,6 +65,6 @@ def Load_data(passed_directory, length):
 #     holder[int(Y[i])] = 1
 #     new.append(holder)
 
-x_dat, y_dat = Load_data(passed_dir, 3)
+# x_dat, y_dat = Sequence_data(passed_dir, 3)
 
-print(x_dat[0])
+# print(x_dat[0])
