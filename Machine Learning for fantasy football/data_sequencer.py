@@ -1,6 +1,12 @@
-'''(4) Function defined which returns a tuple (x,Y) which contains input features and corresponding output label. In the
-current form the features are the minutes played, and transfers in and out for the previous {length} weeks of games played
-and the label is whether or not the points achieved in the next week increases or decreases. '''
+'''
+
+    (4) Function defined which returns a tuple (x,Y) which contains input features
+    and corresponding output label. In the current form the features are the minutes
+    played, and transfers in and out for the previous {length} weeks of games played
+    and the label is whether or not the points achieved in the next week increases
+    or decreases.
+
+'''
 
 import pandas as pd
 import numpy as np
@@ -54,17 +60,3 @@ def Sequence_data(passed_directory, length):
         Y.append(result)
 
     return np.array(x), Y
-
-
-# Vectorize the output data:
-# new = []
-# for i in range(len(Y)):
-#     holder = np.zeros(2)
-#     # Y[i] = 0 => holder - [1,0] == decrease in performane in future
-#     # Y[i] - 1 => sequ = [0,1] == increase in performance in future
-#     holder[int(Y[i])] = 1
-#     new.append(holder)
-
-# x_dat, y_dat = Sequence_data(passed_dir, 3)
-
-# print(x_dat[0])

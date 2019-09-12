@@ -1,8 +1,10 @@
 """
-(6) Testing of model on newly collected data from the current premier league season.
-N.B. in the current code the length of the time series input data is hard-coded, and this may need to be
-change in future if further deeplarning models are produced requiring different length of input data.
- """
+
+    (6) Testing of model on newly collected data from the current premier league season.
+    N.B. in the current code the length of the time series input data is hard-coded, and this may need to be
+    change in future if further deeplarning models are produced requiring different length of input data.
+
+"""
 import tensorflow as tf
 import os
 import pandas as pd
@@ -15,7 +17,7 @@ def Predictions_to_mongodb_and_csv(Gameweek_number, model_name_list):
 
     client = MongoClient('localhost', 27017)
     db = client.FantasyFootball
-    gameweek = db[f"predictions_gw{Gameweek_number}"]
+    gameweek = db[f"predictions_gw{Gameweek_number-1}"]
     print(type(gameweek))
     model_labels = []
     for single_model in model_name_list:
@@ -31,9 +33,15 @@ def Predictions_to_mongodb_and_csv(Gameweek_number, model_name_list):
             player_data = {}
             predictions = []
             for single_model in model_name_list:
-                predict, element_id, element_name = next_week_prediction(directory, filename, single_model[0], single_model[2], single_model[3])
-                player_data.update({f"{single_model[1]} prediction": definitions[int(predict[0])]})
-                predictions.append(definitions[int(predict[0])])
+                predict, element_id, element_name = next_week_prediction(directory, filename, single_model[0], single_model[2], single_model[3], Gameweek_number - 1)
+                try:
+                    player_data.update({f"{single_model[1]} prediction": definitions[int(predict[0])]})
+                except TypeError:
+                    player_data.update({f"{single_model[1]} prediction": predict})
+                try:
+                    predictions.append(definitions[int(predict[0])])
+                except TypeError:
+                    predictions.append(predict)
             player_data.update({
                 "Player": f"{element_name}",
                 "ID": int(element_id)
@@ -46,7 +54,7 @@ def Predictions_to_mongodb_and_csv(Gameweek_number, model_name_list):
     result = gameweek.insert_many(player_list)
     print(result)
     df = pd.DataFrame(np.array(data), columns=names)
-    with open(f"model_predictions_GW4_two.csv", 'w') as file:
+    with open(f"Gameweeks/model_predictions_GW{Gameweek_number}.csv", 'w') as file:
         df.to_csv(file, header=True, mode='w', index=False)
 
 

@@ -1,10 +1,20 @@
-''' (1) Script to retrive player data from the Fantasy Premier League API and update a data files containing player performance data. '''
+'''
+
+    (1) Script to retrive player data from the Fantasy Premier League API
+    and update a data files containing player performance data.
+
+'''
 import requests
 import json
 import os
 import datetime
 import pandas as pd
 import pickle
+
+"""
+https://fantasy.premierleague.com/api/my-team/2634476/ -> specifc fantasy team's players
+
+"""
 
 
 def Update_files():

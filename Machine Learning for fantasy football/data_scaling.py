@@ -1,4 +1,8 @@
-"""(3) Normalize data for model training. """
+"""
+
+    (3) Normalize data for model training.
+
+"""
 
 import pandas as pd
 import numpy as np

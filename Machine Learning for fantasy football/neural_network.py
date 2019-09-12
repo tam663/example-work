@@ -1,4 +1,8 @@
-"""(5) definition of neural network model. """
+"""
+
+    (5) Definition of neural network model.
+
+"""
 
 import time
 import tensorflow as tf
