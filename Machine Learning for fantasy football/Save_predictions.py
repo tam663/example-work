@@ -18,7 +18,7 @@ def Predictions_to_mongodb_and_csv(Gameweek_number, model_name_list):
     client = MongoClient('localhost', 27017)
     db = client.FantasyFootball
     gameweek = db[f"predictions_gw{Gameweek_number-1}"]
-    print(type(gameweek))
+    # print(type(gameweek))
     model_labels = []
     for single_model in model_name_list:
         single_model[0] = tf.keras.models.load_model(f"{single_model[0]}")
@@ -44,15 +44,15 @@ def Predictions_to_mongodb_and_csv(Gameweek_number, model_name_list):
                     predictions.append(predict)
             player_data.update({
                 "Player": f"{element_name}",
-                "ID": int(element_id)
+                "ID": element_id
             })
             player_list.append(player_data)
             total_data = [element_name, element_id] + predictions
             data.append(total_data)
     # print(player_list)
     # print("dataframe:", data)
-    result = gameweek.insert_many(player_list)
-    print(result)
+    # result = gameweek.insert_many(player_list)
+    # print(result)
     df = pd.DataFrame(np.array(data), columns=names)
     with open(f"Gameweeks/model_predictions_GW{Gameweek_number}.csv", 'w') as file:
         df.to_csv(file, header=True, mode='w', index=False)

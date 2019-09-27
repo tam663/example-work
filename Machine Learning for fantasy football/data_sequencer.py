@@ -24,7 +24,7 @@ def Sequence_data(passed_directory, length):
     for filename in os.listdir(f"{directory}/{passed_directory}"):
         if filename.endswith(".csv"):
             df = pd.read_csv(f"{directory}/{passed_directory}/{filename}", index_col="round")
-            # nput_df = df[["transfers_in", "transfers_out", "minutes", "target_points"]] #performance predictior network from "transfers_in", "transfers_out", "minutes"
+            # input_df = df[["transfers_in", "transfers_out", "minutes", "target_points"]] #performance predictior network from "transfers_in", "transfers_out", "minutes"
             input_df = df[['bps', 'ict_index', 'minutes', 'target_points']]  # performance predictior network from 'bps', 'ict_index', 'minutes'
             prev_days = deque(maxlen=SEQ_LEN)  # These will be our actual sequences. They are made with deque, which keeps the maximum length by popping out older values as new ones come in
             for i in input_df.values:  # iterate over the values

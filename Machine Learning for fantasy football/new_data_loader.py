@@ -75,6 +75,3 @@ def Update_files():
         else:
             save_data = pd.DataFrame([player])
             save_data.to_csv(f'NEW_DATA/{player["first_name"]}_{player["second_name"]}_{player["id"]}.csv', header=True, mode='w', index=False)
-
-
-Update_files()

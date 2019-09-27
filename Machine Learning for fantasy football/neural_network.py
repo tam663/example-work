@@ -60,5 +60,5 @@ def Network(directory, TIME_PERIOD, EPOCHS, BATCH_SIZE, LTSM_SHAPE):
 
 
 # dir_pa = Scale_columns(network_type='performance_based')
-TIME_PERIOD, EPOCHS, BATCH_SIZE, LTSM_SHAPE = 3, 20, 32, 128
-Network('new_scaled_data_performance_based_2019-08-31', TIME_PERIOD, EPOCHS, BATCH_SIZE, LTSM_SHAPE)
+# TIME_PERIOD, EPOCHS, BATCH_SIZE, LTSM_SHAPE = 3, 20, 32, 128
+# Network('new_scaled_data_performance_based_2019-08-31', TIME_PERIOD, EPOCHS, BATCH_SIZE, LTSM_SHAPE)
