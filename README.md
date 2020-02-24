@@ -19,8 +19,4 @@ of galactic structures. In particular, Numpy was used to build a python class mo
 interaction between masses in which Runge-Kutta methods were applied. A script of the final programme is
 included in addition to the project report and an animation produced by the script.
 
-3) Neural Network:
-This folder contains a script in which a neural network is implemented using only Numpy. The resulting
-network was able to achieve recognition accuracies of handwritten digits of approximately 90%. The aim
-of this project was not to produce a practical implementation of a neural network but rather to develop
-a more comprehensive understanding of the underlying mathematics of Deep Learning techniques.
+
