@@ -12,9 +12,12 @@ scripts 'new_data_loader', 'Normalise_new_data', 'data_sequencer', 'data_scaling
 and save the predictions in csv form. Pandas and TensorFlow modules are used extensively here, in 
 addition to Numpy. The ipython notebook in this folder walks through the work found in the .py files, and demonstrates the work
 most clearly.
+   Additionally, the folder 'Statistical Analysis of Season' contains statistical analysis of the performance of teams during one
+football season, and prediction of the performance next year based on this, including computation of the associated
+probability distributions.
 
 
-2) Orbits:
+2) Galaxy Orbits Simulation:
 This folder contains a project which investigated the importance of gravity in the longterm evolution
 of galactic structures. In particular, Numpy was used to build a python class model of the gravitational
 interaction between masses in which Runge-Kutta methods were applied. A script of the final programme is
