@@ -25,8 +25,19 @@ included in addition to the project report and an animation produced by the scri
 
 
 The C++ folder contains:
-1) Complete program including all the main() files used to generate simulation results and the .cpp and header files
- in which the crystal model was implemented
- 
- 2) The report for the simulated model including an analysis of the implemeted algorithm and plots of the 
- simulation results.
+1) The complete program and write-up of a research project to investigate the simulation of ferromagnetic properties 
+    using a Monte Carlo Markov algorithm. In this project a model of a crystal was implemented using a C++ class, and 
+    this can be found in the files 'Crystal.cpp' and 'Crystal.hpp'. The four other scripts are programs to record the behaviour 
+    of the simulated lattice under various constraints. Specifically, the 'Temperature_dependence.cpp' file and 'Hysteresis.cpp' 
+    file are for recorded the physical bahviour simulated, while 'Autocorrelation.cpp' and 'Runtimes.cpp' are for analysis of
+    the implementation.
+       Various packages from the C++ standard libray are used in this project, for example the use of the 'random' and 'future'
+    packages were of particular importance for the program to give accurate results and prackical run times. Specifically, using
+    random meant that the cruical Monte Carlo step of the implemented aglgorithm was truly random, while using futures to 
+    aysncronously run the simulation gave order of magnitude speed-ups of the run time.
+    In the pdf for the project and in the figures folder the results of this porject are presented. In brief, the behaviour of ferromagnets 
+    was sucessfully reproduced in all crucial aspects, including the expected phase change behaviour and hysteresis behaviour. The 
+    simulated bahviour was also found to converge to the analytical results as the size of the simulated lattice was increased as 
+    expected. Further analysis of the results and discussion work which can be carried out using this work as a starting point
+    can be found in the accompanying pdf write-up.
+       
