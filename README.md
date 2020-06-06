@@ -7,7 +7,7 @@ This repository contains two folders, one containing Python projects and the oth
 
 1) Machine Learning for Fantasy Football: 
 This project utilises data from the API of 'Premier League Fantasy Football,' an online game in which players have to try and 
-predict the results of football matches (see full rules here: https://fantasy.premierleague.com/help/rules). Football is notoriously
+predict the results of football matches (see full rules [here])https://fantasy.premierleague.com/help/rules)). Football is notoriously
 difficult to predict sport, which is in part a cause of its huge popularity. Many avid supports claim that they can predict the outcomes
 of matches however, and there are [millions of players](https://www.wired.co.uk/article/fantasy-premier-league) of the premier league fantasy football, and even more for the equivalent 
 [american football versions](https://www.washingtonpost.com/news/made-by-history/wp/2017/09/10/the-dark-side-of-fantasy-football/). But is there any 
