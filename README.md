@@ -15,7 +15,7 @@ real behviour that is predictable in football? In this project the statistics of
 are produced using machine learning techniques.
    
    In brief, it was found that football matches can been sucessfully modelled using poisson distributions, and that the preformance 
-of individual players is predictable. The folder [Statistical Season Analysis](example-work/Python/'Machine Learning for fantasy football'/'Statistical Season Analysis'/'Predicting Second Season.ipynb') contains the modelling of matches using skellam 
+of individual players is predictable. The folder [Statistical Season Analysis](example-work/Python/Machine Learning for fantasy football/Statistical Season Analysis/Predicting Second Season.ipynb) contains the modelling of matches using skellam 
 distributions, and the plots of the produced probability distributions can be found in the Jupyter Notebook. 
 
    In the 'Fantasy Football
