@@ -22,7 +22,7 @@ section 3 deals with the physical results of the simulation. In short, speed-ups
 implementation of the simulation by using methods of parallelisation and vectorised measuring. This allowed for larger
 lattices to be simulated, and thus more complex physical behaviours to be studied.
 - In terms of the physics studied, the expected phase change behaviour was sucessfully observed, which can be immediately
-seen in the plots of magnetisation, energy and heat capacity. Second order behaviour was also sucessfully simulated, and in 
+seen in the [plots](/c++/Figures) of magnetisation, energy and heat capacity. Second order behaviour was also sucessfully simulated, and in 
 particular, hysteresis behaviour was observed.
 
 ### 3) Figures
