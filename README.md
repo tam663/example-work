@@ -18,8 +18,8 @@ are produced using machine learning techniques.
 of individual players is predictable. The folder [Statistical Season Analysis](/Python/Machine-Learning-for-Fantasy-Football/Statistical-Season-Analysis) contains the modelling of matches using skellam 
 distributions, and the plots of the produced probability distributions can be found in the [Jupyter Notebook](/Python/Machine-Learning-for-Fantasy-Football/Statistical-Season-Analysis/Predicting-Second-Season.ipynb). 
 
-   In the 'Fantasy Football
-Predictions' Jupyter Notebook the analysis of the footballer performance data from the Premier League Fantasy Football API can be
+   In the [Fantasy Football
+Predictions Jupyter Notebook](/Python/Machine-Learning-for-Fantasy-Football/Fantasy-Football-Predictions.ipynb) the analysis of the footballer performance data from the Premier League Fantasy Football API can be
 found. Here, two predictive models are also built-- one is a performance 'direction' indicator (will a  footballer perform better or worse than
 the previous week given last week's performance) and a regression model to predict the footballer's points in the next match given 
 this weeks performance.
@@ -31,18 +31,18 @@ represents the next steps to be taken in the project.
 
 
 2) Galaxy Orbits Simulation:
-This folder contains the full write-up and program of a project to investigate the formation of galactic structures. In particular, the formation
+This folder contains the full [write-up](Galaxy-Orbits-simulation/Computing_project-final.pdf) and [program](Galaxy-Orbits-simulation/Orbit Calculator.py) of a project to investigate the formation of galactic structures. In particular, the formation
 of galaxy tails and spirals were sucessfully reproduced. The project was implemented in python, and a Runge-Kutta integrator class was 
 written to carry out the required computations.
 
 
 ### C++ :
 1) Ising Crystal Model
-This folder contains the full implementation of the model. The simulation was primarily handled using a "Crystal" class which contained 
-functions to measure and keep track of the physical parameters of interest, and these can be viewed in the files Cyrstal.hpp and Crystal.hpp.
+This folder contains the full implementation and analysis of a Monte Carlo Markov Chain simulation of a ferromagnetic crystal. The simulation was primarily handled using a "Crystal" class which contained 
+functions to measure and keep track of the physical parameters of interest, and these can be viewed in the files [Crystal.cpp](/c++/Ising-Crystal-Model/Crystal.cpp) and [Crystal.hpp](/c++/Ising-Crystal-Model/Crystal.hpp).
 The four other files contain the main() functions for investigating specific properties of the simulated crystal under different conditions. The 
-Autocorrelation.cpp and RunTimes.cpp files record properties of the simulation efficiency, while TemperatureDependence.cpp and 
-Hysteresis.cpp record the simulated physical behaviour of the lattice with respect to temperature and cycling conditions.
+[Autocorrelation.cpp](/c++/Ising-Crystal-Model/Autocorrelation.cpp) and [RunTimes.cpp](/c++/Ising-Crystal-Model/RunTimes.cpp) files record properties of the simulation efficiency, while [TemperatureDependence.cpp](/c++/Ising-Crystal-Model/RunTimes.cpp) and 
+[Hysteresis.cpp](/c++/Ising-Crystal-Model/Hysteresis.cpp) record the simulated physical behaviour of the lattice with respect to temperature and cycling conditions.
 A number of optimisations of the implementation were necessary for these results to be produced. In particular _**use of the 'futures' template**_
 class in the main() function of TemperatureDependence.cpp, Runtimes.cpp and Autocorrelation.cpp produce order of magnitude speed-ups in 
 the run time for the simulation. Other significant speed-ups were achieved using various vector measuring techniques which allowed for the 
