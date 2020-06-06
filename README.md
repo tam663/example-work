@@ -14,7 +14,7 @@ of matches however, and there are [millions of players](https://www.wired.co.uk/
 real behviour that is predictable in football? In this project the statistics of football matches are analysed and predictive models 
 are produced using machine learning techniques.
    
-In brief, it was found that football matches can been sucessfully modelled using poisson distributions, and that the preformance 
+   In brief, it was found that football matches can been sucessfully modelled using poisson distributions, and that the preformance 
 of individual players is predictable. The folder [Statistical Season Analysis](Python/'Machine Learning for fantasy football'/'Statistical Season Analysis'/'Predicting Second Season.ipynb') contains the modelling of matches using skellam 
 distributions, and the plots of the produced probability distributions can be found in the Jupyter Notebook. In the 'Fantasy Football
 Predictions' Jupyter Notebook the analysis of the footballer performance data from the Premier League Fantasy Football API can be
