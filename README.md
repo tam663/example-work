@@ -35,7 +35,7 @@ functions to measure and keep track of the physical parameters of interest, and 
 The four other files contain the main() functions for investigating specific properties of the simulated crystal under different conditions. The 
 Autocorrelation.cpp and RunTimes.cpp files record properties of the simulation efficiency, while TemperatureDependence.cpp and 
 Hysteresis.cpp record the simulated physical behaviour of the lattice with respect to temperature and cycling conditions.
-A number of optimisations of the implementation were necessary for these results to be produced. In particular, **use of the 'futures' template**
+A number of optimisations of the implementation were necessary for these results to be produced. In particular _**use of the 'futures' template**_
 class in the main() function of TemperatureDependence.cpp, Runtimes.cpp and Autocorrelation.cpp produce order of magnitude speed-ups in 
 the run time for the simulation. Other significant speed-ups were achieved using various vector measuring techniques which allowed for the 
 recording of the simulated physical properties to become an O(1) operation rather than )(n2).
