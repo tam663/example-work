@@ -1,9 +1,9 @@
-#Example Work Portfolio - Tom McIver
+# Example Work Portfolio - Tom McIver
 
 This repository contains two folders, one containing Python projects and the other C++. 
 
 
-###Python :
+### Python :
 
 1) Machine Learning for Fantasy Football: 
 This project utilises data from the API of 'Premier League Fantasy Football,' an online game in which players have to try and 
@@ -33,7 +33,7 @@ of galaxy tails and spirals were sucessfully reproduced. The project was impleme
 written to carry out the required computations.
 
 
-###C++ :
+### C++ :
 1) Ising Crystal Model
 This folder contains the full implementation of the model. The simulation was primarily handled using a "Crystal" class which contained 
 functions to measure and keep track of the physical parameters of interest, and these can be viewed in the files Cyrstal.hpp and Crystal.hpp.
