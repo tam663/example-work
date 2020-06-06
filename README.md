@@ -13,7 +13,7 @@ The four other files contain the main() functions for investigating specific pro
 [Hysteresis.cpp](/c++/Ising-Crystal-Model/Hysteresis.cpp) record the simulated physical behaviour of the lattice with respect to temperature and cycling conditions.
 - A number of optimisations of the implementation were necessary for these results to be produced. In particular _**use of the 'futures' template**_
 class in the main() function of TemperatureDependence.cpp, Runtimes.cpp and Autocorrelation.cpp produce order of **magnitude speed-ups in 
-the run time** for the simulation. Other significant speed-ups were achieved using various vector measuring techniques which allowed for the 
+the run time** for the simulation. Other significant speed-ups were achieved using various **vector measuring techniques** which allowed for the 
 recording of the simulated physical properties to become an O(1) operation rather than O(n2).
 
 ### 2) Monte Carlo Simulation of the Ising Model pdf
