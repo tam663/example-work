@@ -58,7 +58,7 @@ represents the next steps to be taken in the project.
 
 
 ### 2) Galaxy Orbits Simulation.
-- This folder contains the full [write-up](Galaxy-Orbits-simulation/Computing_project-final.pdf) and [program](Galaxy-Orbits-simulation/Orbit Calculator.py) of a project to investigate the formation of galactic structures. In particular, the formation
+- This folder contains the full [write-up](Galaxy-Orbits-simulation/CComputing-project-final.pdf) and [program](Galaxy-Orbits-simulation/Orbit-Calculator.py) of a project to investigate the formation of galactic structures. In particular, the formation
 of galaxy tails and spirals were sucessfully reproduced. The project was implemented in python, and a Runge-Kutta integrator class was 
 written to carry out the required computations.
 
