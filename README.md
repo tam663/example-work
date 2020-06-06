@@ -4,7 +4,8 @@ This repository contains two folders, one containing Python projects and the oth
 
 
 ### C++ :
-1) Ising Crystal Model
+1) Ising Crystal Model.
+
 This folder contains the full implementation and analysis of a Monte Carlo Markov Chain simulation of a ferromagnetic crystal. The simulation was primarily handled using a "Crystal" class which contained 
 functions to measure and keep track of the physical parameters of interest, and these can be viewed in the files [Crystal.cpp](/c++/Ising-Crystal-Model/Crystal.cpp) and [Crystal.hpp](/c++/Ising-Crystal-Model/Crystal.hpp).
 The four other files contain the main() functions for investigating specific properties of the simulated crystal under different conditions. The 
@@ -14,7 +15,8 @@ A number of optimisations of the implementation were necessary for these results
 class in the main() function of TemperatureDependence.cpp, Runtimes.cpp and Autocorrelation.cpp produce order of **magnitude speed-ups in 
 the run time** for the simulation. Other significant speed-ups were achieved using various vector measuring techniques which allowed for the 
 recording of the simulated physical properties to become an O(1) operation rather than )(n2).
-2) [Monte Carlo Simulation of the Ising Model pdf](/c++)
+2) [Monte Carlo Simulation of the Ising Model pdf](/c++).
+
 This is the full report for this project. Section 2 contains various results regarding the implementation and optimisation of the program, while 
 section 3 deals with the physical results of the simulation.
 3) Figures
@@ -24,7 +26,8 @@ the error and measurements for the lattice under secificed conditions that may i
 
 ### Python :
 
-1) Machine Learning for Fantasy Football: 
+1) Machine Learning for Fantasy Football.
+
 This project utilises data from the API of 'Premier League Fantasy Football,' an online game in which players have to try and 
 predict the results of football matches (see full rules [here](https://fantasy.premierleague.com/help/rules)). Football is notoriously
 difficult to predict sport, which is in part a cause of its huge popularity. Many avid supports claim that they can predict the outcomes
@@ -49,7 +52,8 @@ Addionally, even with this large value, modelling the predictions as gaussian di
 represents the next steps to be taken in the project.
 
 
-2) Galaxy Orbits Simulation:
+2) Galaxy Orbits Simulation.
+
 This folder contains the full [write-up](Galaxy-Orbits-simulation/Computing_project-final.pdf) and [program](Galaxy-Orbits-simulation/Orbit Calculator.py) of a project to investigate the formation of galactic structures. In particular, the formation
 of galaxy tails and spirals were sucessfully reproduced. The project was implemented in python, and a Runge-Kutta integrator class was 
 written to carry out the required computations.
