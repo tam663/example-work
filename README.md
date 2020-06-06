@@ -1,16 +1,24 @@
-This repository contains two folders, one containing Python projects and the other C++ . The Python folder contains:
+# Example Work Portfolio - Tom McIver
+
+This repository contains two folders, one containing Python projects and the other C++. 
+
+
+### Python :
 
 1) Machine Learning for Fantasy Football: 
 This project utilises data from the API of 'Premier League Fantasy Football,' an online game in which players have to try and 
-predict the results of football matches (see full rules here: https://fantasy.premierleague.com/help/rules). Football is notoriously
+predict the results of football matches (see full rules [here](https://fantasy.premierleague.com/help/rules)). Football is notoriously
 difficult to predict sport, which is in part a cause of its huge popularity. Many avid supports claim that they can predict the outcomes
-of matches however, and there are millions of players of the premier league fantasy football, and even more for the equivalent 
-american football versions (https://www.wired.co.uk/article/fantasy-premier-league, https://www.washingtonpost.com/news/made-by-history/wp/2017/09/10/the-dark-side-of-fantasy-football/). But is there any 
+of matches however, and there are [millions of players](https://www.wired.co.uk/article/fantasy-premier-league) of the premier league fantasy football, and even more for the equivalent 
+[american football versions](https://www.washingtonpost.com/news/made-by-history/wp/2017/09/10/the-dark-side-of-fantasy-football/). But is there any 
 real behviour that is predictable in football? In this project the statistics of football matches are analysed and predictive models 
 are produced using machine learning techniques.
+   
    In brief, it was found that football matches can been sucessfully modelled using poisson distributions, and that the preformance 
-of individual players is predictable. The folder 'Statistical Season Analysis' contains the modelling of matches using skellam 
-distributions, and the plots of the produced probability distributions can be found in the Jupyter Notebook. In the 'Fantasy Football
+of individual players is predictable. The folder [Statistical Season Analysis](/Python/Machine Learning for Fantasy Football/) contains the modelling of matches using skellam 
+distributions, and the plots of the produced probability distributions can be found in the Jupyter Notebook. 
+
+   In the 'Fantasy Football
 Predictions' Jupyter Notebook the analysis of the footballer performance data from the Premier League Fantasy Football API can be
 found. Here, two predictive models are also built-- one is a performance 'direction' indicator (will a  footballer perform better or worse than
 the previous week given last week's performance) and a regression model to predict the footballer's points in the next match given 
@@ -28,7 +36,7 @@ of galaxy tails and spirals were sucessfully reproduced. The project was impleme
 written to carry out the required computations.
 
 
-The C++ folder contains:
+### C++ :
 1) Ising Crystal Model
 This folder contains the full implementation of the model. The simulation was primarily handled using a "Crystal" class which contained 
 functions to measure and keep track of the physical parameters of interest, and these can be viewed in the files Cyrstal.hpp and Crystal.hpp.
