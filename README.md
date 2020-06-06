@@ -23,9 +23,9 @@ Predictions Jupyter Notebook](/Python/Machine-Learning-for-Fantasy-Football/Fant
 found. Here, two predictive models are also built-- one is a performance 'direction' indicator (will a  footballer perform better or worse than
 the previous week given last week's performance) and a regression model to predict the footballer's points in the next match given 
 this weeks performance.
-   Both models built in this project use a recurrent network structure with LTSM units being used. The direction model was able to achieve
-accuracies of 97% while the root mean square error of the regression model was approximately 4 points, which corresponds to an 
-average percentage error of 30%. Although this is a reasonably high error figure, given the random nature of football it is not so bad. 
+   Both models built in this project use a **recurrent network structure with LTSM units being used**. The direction model was able to achieve
+**accuracies of 97% while the root mean square error of the regression model was approximately 4 points, which corresponds to an 
+average percentage error of 30%.** Although this is a reasonably high error figure, given the random nature of football it is not so bad. 
 Addionally, even with this large value, modelling the predictions as gaussian distributed could produce a quite useful model, and this 
 represents the next steps to be taken in the project.
 
@@ -44,10 +44,10 @@ The four other files contain the main() functions for investigating specific pro
 [Autocorrelation.cpp](/c++/Ising-Crystal-Model/Autocorrelation.cpp) and [RunTimes.cpp](/c++/Ising-Crystal-Model/RunTimes.cpp) files record properties of the simulation efficiency, while [TemperatureDependence.cpp](/c++/Ising-Crystal-Model/RunTimes.cpp) and 
 [Hysteresis.cpp](/c++/Ising-Crystal-Model/Hysteresis.cpp) record the simulated physical behaviour of the lattice with respect to temperature and cycling conditions.
 A number of optimisations of the implementation were necessary for these results to be produced. In particular _**use of the 'futures' template**_
-class in the main() function of TemperatureDependence.cpp, Runtimes.cpp and Autocorrelation.cpp produce order of magnitude speed-ups in 
-the run time for the simulation. Other significant speed-ups were achieved using various vector measuring techniques which allowed for the 
+class in the main() function of TemperatureDependence.cpp, Runtimes.cpp and Autocorrelation.cpp produce order of **magnitude speed-ups in 
+the run time** for the simulation. Other significant speed-ups were achieved using various vector measuring techniques which allowed for the 
 recording of the simulated physical properties to become an O(1) operation rather than )(n2).
-2) Monte Carlo Simulation of the Ising Model pdf
+2) [Monte Carlo Simulation of the Ising Model pdf](/c++/Monte Carlo Simulation of the Ising Model.pdf)
 This is the full report for this project. Section 2 contains various results regarding the implementation and optimisation of the program, while 
 section 3 deals with the physical results of the simulation.
 3) Figures
