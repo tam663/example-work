@@ -17,7 +17,7 @@ the run time** for the simulation. Other significant speed-ups were achieved usi
 recording of the simulated physical properties to become an O(1) operation rather than O(n2).
 
 ### 2) Monte Carlo Simulation of the Ising Model pdf
-- This is the [full report](/c++/Monte-Carlo-Simulation-of-the-Ising-Model.pdf) for this project. Section 2 contains various results regarding the implementation and optimisation of the program, while 
+- This is the [full report](/c++/Monte-Carlo-Simulation-of-the-Ising-Model.pdf) for this project. Section 2 contains analysis the implementation and optimisation of the program, while 
 section 3 deals with the physical results of the simulation. In short, speed-ups of approximately 95% were achieved in the 
 implementation of the simulation by using methods of parallelisation and vectorised measuring. This allowed for larger
 lattices to be simulated, and thus more complex physical behaviours to be studied.
