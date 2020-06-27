@@ -1,6 +1,6 @@
 # Example Work Portfolio - Tom McIver
 
-This repository contains two folders, one containing Python projects and the other C++. 
+This repository contains two folders, the contents of which are outlined below: 
 
 
 ## C++
