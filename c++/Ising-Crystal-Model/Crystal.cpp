@@ -47,6 +47,12 @@ Magnetisation(0.0), LatticeEnergy(0.0), SquaredLatticeEnergy(0.0)
 
 
 
+Crystal::~Crystal(){
+    
+}
+
+
+
 void Crystal::PrintLattice(){
     for(int i =0; i<size; i++){
         for( int j=0; j<size; j++){
