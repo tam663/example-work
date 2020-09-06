@@ -85,7 +85,6 @@ void Crystal::lattice_to_csv(std::string version){
 
 
 void Crystal::lattice_to_pbm(std::string version){
-    // Define map to convert the +/-1.0s in lattice to a binary 1/0 representation for the PBM format.
     std::map<float, int> mymap = { { 1.0, 1 }, { -1.0, 0 } };
     std::string fname = "/Users/tommciver/Documents/Crystal190420/" + version + ".pbm";
     std::ofstream outdata(fname.c_str(), std::ios::out | std::ios::binary);
@@ -194,11 +193,6 @@ void Crystal::current_lattice_values(float field){
 
 
 void Crystal::observe_dependent_variables(float temperature, float field){
-    // Observe the total lattice properties, not per atom.
-//    CumulativeMagnetisation[NumMeasurements] = abs(net_magnetisation());
-//    CumulativeSquaredMagnetisation[NumMeasurements] = abs(net_magnetisation())*abs(net_magnetisation());
-//    CumulativeLatticeEnergy[NumMeasurements] = total_lattice_energy(field);
-//    CumulativeSquaredLatticeEnergy[NumMeasurements] = total_lattice_energy(field)*total_lattice_energy(field);
     CumulativeMagnetisation[NumMeasurements] = Magnetisation;
     CumulativeSquaredMagnetisation[NumMeasurements] = Magnetisation*Magnetisation;
     CumulativeLatticeEnergy[NumMeasurements] = LatticeEnergy;
