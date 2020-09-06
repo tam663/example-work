@@ -29,6 +29,7 @@
 //  the variable save_loc.
 
 
+
 #include <vector>
 #include <iostream>
 #include <fstream>
@@ -116,17 +117,17 @@ std::vector<float> compute(float temperature, float field){
   float beta(1.0/temperature);
   vector<float> results(11, 0.0);
 
-  Lattice.Reset(field);
-  Lattice.InitialiseState(temperature, field);
+  Lattice.rest_lattice(field);
+  Lattice.initialise_state(temperature, field);
 
   for( int h = 0; h < MCC; h++){  // MCC samples of MCMC metropolis cycles
     for( int k = 0; k < N; k++ ){  // MCC monte carlo lattice iterations between each sample.
-      Lattice.UpdatePosition(temperature, beta, field);  // iterate crystal
+      Lattice.update_position(temperature, beta, field);  // iterate crystal
     }
-    Lattice.ObserveDependentVariables(temperature, field);  // sample crystal
+    Lattice.observe_dependent_variables(temperature, field);  // sample crystal
   }
 
-  auto [AvMagnetisation, MagErr, AvSquaredMagnetisation, SqMagErr, AvLatticeEnergy, EnErr, AvSquaredLatticeEnergy, SqEnErr, HeatCapacity, HeatCapacityErr] = Lattice.ReturnDependentVariables(temperature);  // retrieve the sampled values, which are tracked within the Crystal class.
-  results.assign({temperature, AvMagnetisation, MagErr, AvSquaredMagnetisation, SqMagErr, AvLatticeEnergy, EnErr, AvSquaredLatticeEnergy, SqEnErr, HeatCapacity, HeatCapacityErr});
+  auto [av_magnetisation, magnetisation_error, average_squared_magnetisation, squared_magnetisation_error, average_lattice_energy, lattice_energy_error, average_squared_lattice_energy, sqd_lattice_energy_error, heat_capacity, heat_capacity_error] = Lattice.return_dependent_variables(temperature);  // retrieve the sampled values, which are tracked within the Crystal class.
+  results.assign({temperature, av_magnetisation, magnetisation_error, average_squared_magnetisation, squared_magnetisation_error, average_lattice_energy, lattice_energy_error, average_squared_lattice_energy, sqd_lattice_energy_error, heat_capacity, heat_capacity_error});
   return results;
 }

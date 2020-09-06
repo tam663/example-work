@@ -39,9 +39,9 @@ Magnetisation(0.0), LatticeEnergy(0.0), SquaredLatticeEnergy(0.0)
     }
     accepted =0.0;
     total = 0.0;
-    LatticeEnergy = TotalLatticeEnergy(field);
+    LatticeEnergy = total_lattice_energy(field);
     SquaredLatticeEnergy = LatticeEnergy*LatticeEnergy;
-    Magnetisation = NetMagnetisation();
+    Magnetisation = net_magnetisation();
     
 }
 
@@ -53,7 +53,7 @@ Crystal::~Crystal(){
 
 
 
-void Crystal::PrintLattice(){
+void Crystal::print_lattice(){
     for(int i =0; i<size; i++){
         for( int j=0; j<size; j++){
             std::cout << lattice[i][j];
@@ -64,7 +64,7 @@ void Crystal::PrintLattice(){
 
 
 
-void Crystal::SaveLatticeCSV(std::string version){
+void Crystal::lattice_to_csv(std::string version){
     std::ofstream outdata;
     std::string fileloc = "/Users/tommciver/Documents/Crystal190420/" + version + ".csv";
     outdata.open(fileloc);
@@ -84,7 +84,7 @@ void Crystal::SaveLatticeCSV(std::string version){
 
 
 
-void Crystal::SaveLatticePBM(std::string version){
+void Crystal::lattice_to_pbm(std::string version){
     // Define map to convert the +/-1.0s in lattice to a binary 1/0 representation for the PBM format.
     std::map<float, int> mymap = { { 1.0, 1 }, { -1.0, 0 } };
     std::string fname = "/Users/tommciver/Documents/Crystal190420/" + version + ".pbm";
@@ -116,10 +116,10 @@ void Crystal::SaveLatticePBM(std::string version){
 
 
 
-void Crystal::UpdatePosition(float T, float Beta, float H){
+void Crystal::update_position(float T, float Beta, float H){
     int i = int(distribution(generator) * size);
     int j = int(distribution(generator) * size);
-    float EnergyChange = FlipEnergyPosition(i, j, T, Beta, H);
+    float EnergyChange = flip_energy_position(i, j, T, Beta, H);
     total +=1.0;
     if(EnergyChange < 0){
         lattice[i][j] *= -1.0;
@@ -140,7 +140,7 @@ void Crystal::UpdatePosition(float T, float Beta, float H){
 
 
 
-void Crystal::Reset(float field){
+void Crystal::rest_lattice(float field){
     float rando;
     for(int i = 0; i < size; i++){
         for(int j = 0; j < size; j++){
@@ -155,50 +155,50 @@ void Crystal::Reset(float field){
     }
     accepted =0.0;
     total = 0.0;
-    LatticeEnergy = TotalLatticeEnergy(field);
+    LatticeEnergy = total_lattice_energy(field);
     SquaredLatticeEnergy = LatticeEnergy*LatticeEnergy;
-    Magnetisation = NetMagnetisation();
+    Magnetisation = net_magnetisation();
 }
 
 
 
-void Crystal::InitialiseState( float temperature, float field){
+void Crystal::initialise_state( float temperature, float field){
     float beta = 1.0 / temperature;
     for( int k = 0; k < int(size*size*100); k++ ){
         // Update Random point:
-        UpdatePosition(temperature, beta, field);
+        update_position(temperature, beta, field);
     }
 }
 
 
 
-float Crystal::ReturnAcceptanceRatio(){
+float Crystal::return_acceptance_ratio(){
     return accepted/total;
 }
 
 
 
-void Crystal::CurrentLatticeValues(float field){
+void Crystal::current_lattice_values(float field){
     std::cout << "Running agnetisation: " << Magnetisation << "\n";
-    std::cout << "Measured Magnetisation: " << NetMagnetisation() << "\n";
+    std::cout << "Measured Magnetisation: " << net_magnetisation() << "\n";
     std::cout << "Running Squared Magnetisation: " << Magnetisation*Magnetisation << "\n";
-    std::cout << "Measured Squared MagnetisationL " << NetMagnetisation()*NetMagnetisation() << "\n";
+    std::cout << "Measured Squared MagnetisationL " << net_magnetisation()*net_magnetisation() << "\n";
     std::cout << "Lattice Energy: " << LatticeEnergy << "\n";
-    std::cout << "Measured Energy: " << TotalLatticeEnergy(field) << "\n";
+    std::cout << "Measured Energy: " << total_lattice_energy(field) << "\n";
     std::cout << "Squared Lattice Energy: " << SquaredLatticeEnergy << "\n";
-    std::cout << "Measured Squared Energy: " << TotalLatticeEnergy(field)*TotalLatticeEnergy(field) << "\n";
+    std::cout << "Measured Squared Energy: " << total_lattice_energy(field)*total_lattice_energy(field) << "\n";
     std::cout << NumMeasurements << "\n";
     std::cout << "\n";
 }
 
 
 
-void Crystal::ObserveDependentVariables(float temperature, float field){
+void Crystal::observe_dependent_variables(float temperature, float field){
     // Observe the total lattice properties, not per atom.
-//    CumulativeMagnetisation[NumMeasurements] = abs(NetMagnetisation());
-//    CumulativeSquaredMagnetisation[NumMeasurements] = abs(NetMagnetisation())*abs(NetMagnetisation());
-//    CumulativeLatticeEnergy[NumMeasurements] = TotalLatticeEnergy(field);
-//    CumulativeSquaredLatticeEnergy[NumMeasurements] = TotalLatticeEnergy(field)*TotalLatticeEnergy(field);
+//    CumulativeMagnetisation[NumMeasurements] = abs(net_magnetisation());
+//    CumulativeSquaredMagnetisation[NumMeasurements] = abs(net_magnetisation())*abs(net_magnetisation());
+//    CumulativeLatticeEnergy[NumMeasurements] = total_lattice_energy(field);
+//    CumulativeSquaredLatticeEnergy[NumMeasurements] = total_lattice_energy(field)*total_lattice_energy(field);
     CumulativeMagnetisation[NumMeasurements] = Magnetisation;
     CumulativeSquaredMagnetisation[NumMeasurements] = Magnetisation*Magnetisation;
     CumulativeLatticeEnergy[NumMeasurements] = LatticeEnergy;
@@ -208,7 +208,7 @@ void Crystal::ObserveDependentVariables(float temperature, float field){
 
 
 
-void Crystal::ResetDependentVariables(){
+void Crystal::rest_dependent_variables(){
     CumulativeMagnetisation.assign(N, 0.0);
     CumulativeSquaredMagnetisation.assign(N, 0.0);
     CumulativeLatticeEnergy.assign(N, 0.0);
@@ -218,7 +218,7 @@ void Crystal::ResetDependentVariables(){
 
 
 
-float Crystal::AverageMagnetisationPerAtom(){
+float Crystal::average_magnetisation_per_atom(){
     float AvMag(0.0);
     for (auto& n : CumulativeMagnetisation)
         AvMag += n;
@@ -227,7 +227,7 @@ float Crystal::AverageMagnetisationPerAtom(){
 
 
 
-float Crystal::AverageAbsMagnetisationPerAtom(){
+float Crystal::average_absolute_magnetisation_per_atom(){
     float AvMag(0.0);
     for (auto& n : CumulativeMagnetisation)
         AvMag += abs(n);
@@ -236,7 +236,7 @@ float Crystal::AverageAbsMagnetisationPerAtom(){
 
 
 
-float Crystal::AverageSquaredMagnetisationPerAtom(){
+float Crystal::average_squared_magnetisation_per_atom(){
     float AvSqMag(0.0);
     for (auto& n : CumulativeSquaredMagnetisation)
         AvSqMag += n;
@@ -245,7 +245,7 @@ float Crystal::AverageSquaredMagnetisationPerAtom(){
 
 
 
-float Crystal::AverageMagnetisation(){
+float Crystal::average_net_magnetisation(){
     float AvMag(0.0);
     for (auto& n : CumulativeMagnetisation)
         AvMag += n;
@@ -254,7 +254,7 @@ float Crystal::AverageMagnetisation(){
 
 
 
-float Crystal::AverageAbsMagnetisation(){
+float Crystal::average_absolute_magnetisation(){
     float AvMag(0.0);
     for (auto& n : CumulativeMagnetisation)
         AvMag += abs(n);
@@ -263,7 +263,7 @@ float Crystal::AverageAbsMagnetisation(){
 
 
 
-float Crystal::AverageSquaredMagnetisation(){
+float Crystal::average_squared_magnetisation(){
     float AvSqMag(0.0);
     for (auto& n : CumulativeSquaredMagnetisation)
         AvSqMag += n;
@@ -272,7 +272,7 @@ float Crystal::AverageSquaredMagnetisation(){
 
 
 
-float Crystal::AverageEnergyPerAtom(){
+float Crystal::average_energy_per_atom(){
     float AvEn(0.0);
     for (auto& n : CumulativeLatticeEnergy)
         AvEn += n;
@@ -281,7 +281,7 @@ float Crystal::AverageEnergyPerAtom(){
 
 
 
-float Crystal::AverageSquaredEnergyPerAtom(){
+float Crystal::average_squared_energy_per_atom(){
     float AvSqEn(0.0);
     for (auto& n : CumulativeSquaredLatticeEnergy)
         AvSqEn += n;
@@ -290,7 +290,7 @@ float Crystal::AverageSquaredEnergyPerAtom(){
 
 
 
-float Crystal::AverageEnergy(){
+float Crystal::average_energy(){
     float AvEn(0.0);
     for (auto& n : CumulativeLatticeEnergy)
         AvEn += n;
@@ -299,7 +299,7 @@ float Crystal::AverageEnergy(){
 
 
 
-float Crystal::AverageSquaredEnergy(){
+float Crystal::average_squared_energy(){
     float AvSqEn(0.0);
     for (auto& n : CumulativeSquaredLatticeEnergy)
         AvSqEn += n;
@@ -307,16 +307,16 @@ float Crystal::AverageSquaredEnergy(){
 }
 
 
-float Crystal::HeatCapacity(float temperature){
+float Crystal::heat_capacity(float temperature){
     // Return Heat capacity per atom.
-    return ( AverageSquaredEnergy() - AverageEnergy()*AverageEnergy() ) / (temperature*temperature*size*size) ;
+    return ( average_squared_energy() - average_energy()*average_energy() ) / (temperature*temperature*size*size) ;
 }
 
 
 
-float Crystal::ErrorMagentisation(){
+float Crystal::error_magnetisation(){
     float norm = (float)(size*size);
-    float average = AverageAbsMagnetisation();
+    float average = average_absolute_magnetisation();
     float error(0.0);
     for (auto n : CumulativeMagnetisation)
         error += (abs(n) - average)*(abs(n) - average);
@@ -325,8 +325,8 @@ float Crystal::ErrorMagentisation(){
 
 
 
-float Crystal::ErrorSquaredMagnetisation(){
-    float average = AverageSquaredMagnetisation();
+float Crystal::error_squared_magnetisation(){
+    float average = average_net_magnetisation();
     float error(0.0);
     for (auto& n : CumulativeSquaredMagnetisation)
         error += (abs(n) - average)*(abs(n) - average);
@@ -335,8 +335,8 @@ float Crystal::ErrorSquaredMagnetisation(){
 
 
 
-float Crystal::ErrorEnergy(){
-    float average = AverageEnergy();
+float Crystal::error_energy(){
+    float average = average_energy();
     float error(0.0);
     for (auto& n : CumulativeLatticeEnergy)
         error += (n - average)*(n - average);
@@ -345,8 +345,8 @@ float Crystal::ErrorEnergy(){
 
 
 
-float Crystal::ErrorSquaredEnergy(){
-    float average = AverageSquaredEnergy();
+float Crystal::error_squared_energy(){
+    float average = average_squared_energy();
     float error(0.0);
     for (auto& n : CumulativeSquaredLatticeEnergy)
         error += (abs(n) - average)*(abs(n) - average);
@@ -354,28 +354,28 @@ float Crystal::ErrorSquaredEnergy(){
 }
 
 
-float Crystal::ErrorHeatCapacity(float temperature){
+float Crystal::error_heat_capacity(float temperature){
     float beta = 1/temperature;
     float beta4 = beta*beta*beta*beta;
-    float errorsqd = (beta4*pow(ErrorSquaredEnergy(), 2)) + (4*beta4*pow(ErrorEnergy(),2)*pow(AverageEnergy(),2));
+    float errorsqd = (beta4*pow(error_squared_energy(), 2)) + (4*beta4*pow(error_energy(),2)*pow(average_energy(),2));
     return sqrt(errorsqd)/((float)(size*size));
 }
 
 
 
-std::tuple<float, float, float, float, float, float, float, float, float, float> Crystal::ReturnDependentVariables(float temperature){
-    return {AverageAbsMagnetisationPerAtom(), ErrorMagentisation(), AverageSquaredMagnetisationPerAtom(), ErrorSquaredMagnetisation(), AverageEnergyPerAtom(), ErrorEnergy(), AverageSquaredEnergyPerAtom(), ErrorSquaredEnergy(), HeatCapacity(temperature), ErrorHeatCapacity(temperature)};
+std::tuple<float, float, float, float, float, float, float, float, float, float> Crystal::return_dependent_variables(float temperature){
+    return {average_absolute_magnetisation_per_atom(), error_magnetisation(), average_squared_magnetisation_per_atom(), error_squared_magnetisation(), average_energy_per_atom(), error_energy(), average_squared_energy_per_atom(), error_squared_energy(), heat_capacity(temperature), error_heat_capacity(temperature)};
 }
 
-float Crystal::ReturnAverageMagnetisation(){
-    return AverageMagnetisation();
+float Crystal::return_average_magnetisation(){
+    return average_net_magnetisation();
 }
 
-float Crystal::ReturnAverageMagnetisationPerAtom(){
-    return AverageMagnetisationPerAtom();
+float Crystal::return_average_magnetisation_per_atom(){
+    return average_magnetisation_per_atom();
 }
 
-std::vector<float>  Crystal::ReturnCumulativeMagnetisationVector(){
+std::vector<float>  Crystal::return_cumulative_magnetisation_vector(){
     return CumulativeSquaredMagnetisation;
 }
 
@@ -384,11 +384,11 @@ std::vector<float>  Crystal::ReturnCumulativeMagnetisationVector(){
 // Private functions:
 
 
-float Crystal::TotalLatticeEnergy(float H){
+float Crystal::total_lattice_energy(float H){
     float TotalLatEnergy = 0.0;
     for( int i =0; i < size; i++){
         for( int j = 0; j < size; j++){
-            TotalLatEnergy += EnergyPosition(i, j, H);
+            TotalLatEnergy += energy_position(i, j, H);
         }
     }
     return TotalLatEnergy / 2.0;
@@ -399,7 +399,7 @@ float Crystal::TotalLatticeEnergy(float H){
 
 
 
-float Crystal::EnergyPosition(int i, int j, float H){
+float Crystal::energy_position(int i, int j, float H){
     float Energy;
 
     if( i ==0 and j ==0 ){
@@ -459,7 +459,7 @@ float Crystal::EnergyPosition(int i, int j, float H){
     
 
 
-float Crystal::FlipEnergyPosition(int i, int j, float T, float Beta, float H){
+float Crystal::flip_energy_position(int i, int j, float T, float Beta, float H){
     float InitialEnergy;
     float FlippedEnergy;
 
@@ -529,7 +529,7 @@ float Crystal::FlipEnergyPosition(int i, int j, float T, float Beta, float H){
 
 
 
-float Crystal::CountSpinsUp(){
+float Crystal::count_spins_up(){
     float count1 = 0.0;
     for(int i = 0; i < size; i++) {
         for(int j = 0; j < size; j++){
@@ -543,7 +543,7 @@ float Crystal::CountSpinsUp(){
 
 
 
-float Crystal::CountSpinsDown(){
+float Crystal::count_spins_down(){
     int count1 = 0.0;
     for(int i = 0; i < size; i++) {
         for(int j = 0; j < size; j++){
@@ -557,6 +557,6 @@ float Crystal::CountSpinsDown(){
 
 
 
-float Crystal::NetMagnetisation(){
-    return (CountSpinsUp() - CountSpinsDown());
+float Crystal::net_magnetisation(){
+    return (count_spins_up() - count_spins_down());
 }

@@ -75,22 +75,22 @@ vector<float> auto_correlation(int lag, float temperature, float field){
   Crystal Lattice(size, J, mu, temperature, field, MCC);
   float beta = 1.0/temperature;
   vector<float> results(2, 0.0);
-  float autoCorr(0.0);
+  float auto_correlation(0.0);
       
-  Lattice.Reset(field);
-  Lattice.InitialiseState(temperature, field);
+  Lattice.rest_lattice(field);
+  Lattice.initialise_state(temperature, field);
   for( int h = 0; h < MCC; h++){  // MCC samples of MCMC metropolis cycles
     for( int k = 0; k < lag; k++ ){  // MCC monte carlo lattice iterations between each sample.
-      Lattice.UpdatePosition(temperature, beta, field);  // iterate crystal
+      Lattice.update_position(temperature, beta, field);  // iterate crystal
     }
-    Lattice.ObserveDependentVariables(temperature, field);  // sample crystal
+    Lattice.observe_dependent_variables(temperature, field);  // sample crystal
   }
-  auto simulationResults = Lattice.ReturnCumulativeMagnetisationVector();
-  auto Av = Lattice.ReturnAverageMagnetisation();
+  auto simulation_results = Lattice.return_cumulative_magnetisation_vector();
+  auto Av = Lattice.return_average_magnetisation();
   
   for(int i = 0; i < MCC-1; i++){
-    autoCorr += (simulationResults[i] - Av)*(simulationResults[i+1]-Av);
+    auto_correlation += (simulation_results[i] - Av)*(simulation_results[i+1]-Av);
   }
-  results.assign({(float)lag, autoCorr/(MCC-1)});
+  results.assign({(float)lag, auto_correlation/(MCC-1)});
   return results;
 }

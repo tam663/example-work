@@ -138,8 +138,8 @@ int main(){
 vector<vector<float>> crystal_simulator(){
 
   Crystal Lattice(size, J, mu, temperature, 0.0, MCC);
-  Lattice.Reset(0.0);
-  Lattice.InitialiseState(temperature, 0.0);
+  Lattice.rest_lattice(0.0);
+  Lattice.initialise_state(temperature, 0.0);
   vector<vector<float>> results;
     
   iterate_crystal(Lattice, true, true, results);
@@ -171,24 +171,24 @@ void iterate_crystal(Crystal &latticeInstance, bool positive_iteration, bool up,
     for(auto H : field){
       for( int h = 0; h < MCC; h++){
         for( int k = 0; k < N; k++ ){
-          latticeInstance.UpdatePosition(temperature, beta, H);
+          latticeInstance.update_position(temperature, beta, H);
         }
-        latticeInstance.ObserveDependentVariables(temperature, H);
+        latticeInstance.observe_dependent_variables(temperature, H);
       }
-      results.push_back({H, latticeInstance.ReturnAverageMagnetisationPerAtom()});
-      latticeInstance.ResetDependentVariables();
+      results.push_back({H, latticeInstance.return_average_magnetisation_per_atom()});
+      latticeInstance.rest_dependent_variables();
     }
     } else{
         //Iterate through field array from back to front
         for (int i = number-1; i --> 0; ){
           for( int h = 0; h < MCC; h++){
             for( int k = 0; k < N; k++ ){
-              latticeInstance.UpdatePosition(temperature, beta, field[i]);
+              latticeInstance.update_position(temperature, beta, field[i]);
             }
-            latticeInstance.ObserveDependentVariables(temperature, field[i]);
+            latticeInstance.observe_dependent_variables(temperature, field[i]);
           }
-          results.push_back({field[i], latticeInstance.ReturnAverageMagnetisationPerAtom()});
-          latticeInstance.ResetDependentVariables();
+          results.push_back({field[i], latticeInstance.return_average_magnetisation_per_atom()});
+          latticeInstance.rest_dependent_variables();
         }
     }
 }
