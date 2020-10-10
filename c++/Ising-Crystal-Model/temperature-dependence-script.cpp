@@ -6,16 +6,16 @@
 //  capacity implied by these simulated values. The Ising model of a
 //  ferromagnet makes predictions of crystal behaviour under various
 //  external conditions, and this script reproduces these predictions
-//  for variable external temperature. This means that all other variables
+//  for variable external temperatures. This means that all other variables
 //  are set as constants during the simulation, including:
 //
-//    -> Size of simulated crystal, set by N
-//    -> Strength of the applied external field, set by field
-//    -> Strength of the atomic interaction constant, set by mu
-//    -> Strength of magnetic interaction set by J
+//    -> Size of simulated crystal, set by 'N'
+//    -> Strength of the applied external field, set by 'field'
+//    -> Strength of the atomic interaction constant, set by 'mu'
+//    -> Strength of magnetic interaction set by 'J'
 //
 //  In addition to this, the simulation also takes variables which
-//  determine the accuracy and length of the simulation. MCC is the primary
+//  determine the accuracy and length of the simulation. 'MCC' is the primary
 //  variable which determines this, and it is by default set to 100,000.
 //  There is a trade off between simulating the crystal on practical time-
 //  scales, and reproducing acceptible levels of accuracy in the simulation.
@@ -26,7 +26,7 @@
 //  physical paramaters for a constant temperature.
 //
 //  The script will return a .csv file and save it within a file specified by
-//  the variable save_loc.
+//  the variable 'save_loc'.
 
 
 
