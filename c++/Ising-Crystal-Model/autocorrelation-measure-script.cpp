@@ -88,7 +88,7 @@ vector<float> auto_correlation(int lag, float temperature, float field){
   auto simulation_results = Lattice.return_cumulative_magnetisation_vector();
   auto Av = Lattice.return_average_magnetisation();
   
-  for(int i = 0; i < MCC-1; i++){
+  for(int i = 0; i < MCC - 1; i++){
     auto_correlation += (simulation_results[i] - Av)*(simulation_results[i+1]-Av);
   }
   results.assign({(float)lag, auto_correlation/(MCC-1)});

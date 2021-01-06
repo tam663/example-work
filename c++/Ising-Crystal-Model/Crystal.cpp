@@ -37,7 +37,7 @@ Magnetisation(0.0), LatticeEnergy(0.0), SquaredLatticeEnergy(0.0)
         }
         lattice.push_back(v);
     }
-    accepted =0.0;
+    accepted = 0.0;
     total = 0.0;
     LatticeEnergy = total_lattice_energy(field);
     SquaredLatticeEnergy = LatticeEnergy*LatticeEnergy;
@@ -54,8 +54,8 @@ Crystal::~Crystal(){
 
 
 void Crystal::print_lattice(){
-    for(int i =0; i<size; i++){
-        for( int j=0; j<size; j++){
+    for(int i = 0; i < size; i++){
+        for( int j = 0; j < size; j++){
             std::cout << lattice[i][j];
         }
         std::cout << std::endl;
@@ -72,9 +72,9 @@ void Crystal::lattice_to_csv(std::string version){
         std::cerr << "Error: file could not be opened" << std::endl;
         exit(1);
     }
-    for ( int r=0; r<size ; r++) {
-        for(int w=0; w<size; w++){
-            if( w == (size -1)){outdata << lattice[r][w];}
+    for ( int r = 0; r < size ; r++) {
+        for(int w=0; w < size; w++){
+            if( w == (size - 1)){outdata << lattice[r][w];}
             else{ outdata << lattice[r][w] << ',';}
         }
         outdata << std::endl;
@@ -94,10 +94,10 @@ void Crystal::lattice_to_pbm(std::string version){
         
         outdata << std::to_string(size) << " " << std::to_string(size) << "\n";
         
-        for ( int r=0; r<size ; r++) {
-            for(int w=0; w<size; w++){
+        for ( int r = 0; r < size ; r++) {
+            for(int w = 0; w < size; w++){
                 
-                if( w == (size -1)){
+                if( w == (size - 1)){
                     outdata << mymap.at(lattice[r][w]);
                 }
                 
@@ -119,10 +119,10 @@ void Crystal::update_position(float T, float Beta, float H){
     int i = int(distribution(generator) * size);
     int j = int(distribution(generator) * size);
     float EnergyChange = flip_energy_position(i, j, T, Beta, H);
-    total +=1.0;
+    total += 1.0;
     if(EnergyChange < 0){
         lattice[i][j] *= -1.0;
-        accepted +=1.0;
+        accepted += 1.0;
         Magnetisation += -2*lattice[i][j];
         LatticeEnergy += EnergyChange;
         SquaredLatticeEnergy = LatticeEnergy*LatticeEnergy;
@@ -130,7 +130,7 @@ void Crystal::update_position(float T, float Beta, float H){
     }
     else if( exp(-EnergyChange*Beta) > distribution(generator)){
         lattice[i][j] *= -1.0;
-        accepted +=1.0;
+        accepted += 1.0;
         Magnetisation += -2*lattice[i][j];
         LatticeEnergy += EnergyChange;
         SquaredLatticeEnergy = LatticeEnergy*LatticeEnergy;
@@ -152,7 +152,7 @@ void Crystal::rest_lattice(float field){
             }
         }
     }
-    accepted =0.0;
+    accepted = 0.0;
     total = 0.0;
     LatticeEnergy = total_lattice_energy(field);
     SquaredLatticeEnergy = LatticeEnergy*LatticeEnergy;
@@ -207,7 +207,7 @@ void Crystal::rest_dependent_variables(){
     CumulativeSquaredMagnetisation.assign(N, 0.0);
     CumulativeLatticeEnergy.assign(N, 0.0);
     CumulativeSquaredLatticeEnergy.assign(N, 0.0);
-    NumMeasurements =0;
+    NumMeasurements = 0;
 }
 
 
@@ -349,7 +349,7 @@ float Crystal::error_squared_energy(){
 
 
 float Crystal::error_heat_capacity(float temperature){
-    float beta = 1/temperature;
+    float beta = 1 / temperature;
     float beta4 = beta*beta*beta*beta;
     float errorsqd = (beta4*pow(error_squared_energy(), 2)) + (4*beta4*pow(error_energy(),2)*pow(average_energy(),2));
     return sqrt(errorsqd)/((float)(size*size));
@@ -380,7 +380,7 @@ std::vector<float>  Crystal::return_cumulative_magnetisation_vector(){
 
 float Crystal::total_lattice_energy(float H){
     float TotalLatEnergy = 0.0;
-    for( int i =0; i < size; i++){
+    for( int i = 0; i < size; i++){
         for( int j = 0; j < size; j++){
             TotalLatEnergy += energy_position(i, j, H);
         }
@@ -396,49 +396,49 @@ float Crystal::total_lattice_energy(float H){
 float Crystal::energy_position(int i, int j, float H){
     float Energy;
 
-    if( i ==0 and j ==0 ){
+    if( i ==0 and j == 0 ){
     //        Left hand top corner
         Energy = -J*lattice[0][0]*(lattice[0][1] + lattice[1][0] + lattice[0][size-1] + lattice[size-1][0] - mu*H);
         return Energy;
     }
 
-    else if( i == 0 and j ==(size - 1)){
+    else if( i == 0 and j == (size - 1)){
         //        Right hand top corner
         Energy = -J*lattice[0][size - 1]*(lattice[0][size - 2] + lattice[1][size - 1] + lattice[0][0] + lattice[size - 1][size - 1] - mu*H);
         return Energy;
     }
 
-    else if( i == ( size - 1 ) and j==0){
+    else if( i == ( size - 1 ) and j == 0){
     //        Left hand bottom corner
         Energy = -J*lattice[size - 1][0]*( lattice[size - 1][1] + lattice[size - 2][0] + lattice[0][0] + lattice[size - 1][size-1] - mu*H);
         return Energy;
     }
 
-    else if( i == (size - 1) and j==(size - 1)){
+    else if( i == (size - 1) and j == (size - 1)){
         //        Right hand bottom corner
         Energy = -J*lattice[size - 1][size - 1]*( lattice[size - 1][size - 2] + lattice[size - 2][size - 1] + lattice[size-1][0] + lattice[0][size - 1] - mu*H);
         return Energy;
     }
 
-    else if( i==0 ){
+    else if( i== 0 ){
     //        Top edge
         Energy = -J*lattice[0][j]*(lattice[0][j + 1] + lattice[0][j - 1] + lattice[1][j] + lattice[size-1][j] - mu*H);
         return Energy;
     }
 
-    else if( i==(size - 1) ){
+    else if( i == (size - 1) ){
     //        Bottom edge
         Energy = -J*lattice[size - 1][j]*(lattice[size - 1][j + 1] + lattice[size - 1][j - 1] + lattice[size - 2][j] + lattice[0][j] - mu*H);
         return Energy;
     }
 
-    else if( j==0 ){
+    else if( j == 0 ){
     //        Left egde
         Energy = -J*lattice[i][0]*(lattice[i][1] + lattice[i-1][0] + lattice[i+1][0] + lattice[i][size-1] - mu*H);
         return Energy;
     }
 
-    else if( j== (size - 1) ){
+    else if( j == (size - 1) ){
     //        Right edge
         Energy = -J*lattice[i][size - 1]*(lattice[i][size - 2] + lattice[i + 1][size- 1] + lattice[i-1][size - 1] + lattice[i][0] - mu*H);
         return Energy;
@@ -457,56 +457,56 @@ float Crystal::flip_energy_position(int i, int j, float T, float Beta, float H){
     float InitialEnergy;
     float FlippedEnergy;
 
-    if( i ==0 and j ==0 ){
+    if( i == 0 and j == 0 ){
     //        Left hand top corner
         InitialEnergy = -J*lattice[0][0]*(lattice[0][1] + lattice[1][0] + lattice[0][size-1] + lattice[size-1][0] - mu*H);
         FlippedEnergy = J*lattice[0][0]*(lattice[0][1] + lattice[1][0] + lattice[0][size-1] + lattice[size-1][0] - mu*H);
         return FlippedEnergy - InitialEnergy ;
     }
 
-    else if( i == 0 and j ==(size - 1)){
+    else if( i == 0 and j == (size - 1)){
     //        Right hand top corner
         InitialEnergy = -J*lattice[0][size - 1]*(lattice[0][size - 2] + lattice[1][size - 1] + lattice[0][0] + lattice[size - 1][size - 1] - mu*H);
         FlippedEnergy = J*lattice[0][size - 1]*(lattice[0][size - 2] + lattice[1][size - 1] + lattice[0][0] + lattice[size - 1][size - 1] - mu*H);
         return FlippedEnergy - InitialEnergy ;
     }
 
-    else if( i == ( size - 1 ) and j==0){
+    else if( i == ( size - 1 ) and j == 0){
     //        Left hand bottom corner
         InitialEnergy = -J*lattice[size - 1][0]*( lattice[size - 1][1] + lattice[size - 2][0] + lattice[0][0] + lattice[size - 1][size-1] - mu*H);
         FlippedEnergy = J*lattice[size - 1][0]*( lattice[size - 1][1] + lattice[size - 2][0] + lattice[0][0] + lattice[size - 1][size-1] - mu*H);
         return FlippedEnergy - InitialEnergy ;
     }
 
-    else if( i == (size - 1) and j==(size - 1)){
+    else if( i == (size - 1) and j == (size - 1)){
     //        Right hand bottom corner
         InitialEnergy = -J*lattice[size - 1][size - 1]*( lattice[size - 1][size - 2] + lattice[size - 2][size - 1] + lattice[size-1][0] + lattice[0][size - 1] - mu*H);
         FlippedEnergy = J*lattice[size - 1][size - 1]*( lattice[size - 1][size - 2] + lattice[size - 2][size - 1] + lattice[size-1][0] + lattice[0][size - 1] - mu*H);
         return FlippedEnergy - InitialEnergy ;
     }
 
-    else if( i==0 ){
+    else if( i == 0 ){
     //        Top edge
         InitialEnergy = -J*lattice[0][j]*(lattice[0][j + 1] + lattice[0][j - 1] + lattice[1][j] + lattice[size-1][j] - mu*H);
         FlippedEnergy = J*lattice[0][j]*(lattice[0][j + 1] + lattice[0][j - 1] + lattice[1][j] + lattice[size-1][j] - mu*H);
         return FlippedEnergy - InitialEnergy ;
     }
 
-    else if( i==(size - 1) ){
+    else if( i == (size - 1) ){
     //        Bottom edge
         InitialEnergy = -J*lattice[size - 1][j]*(lattice[size - 1][j + 1] + lattice[size - 1][j - 1] + lattice[size - 2][j] + lattice[0][j] - mu*H);
         FlippedEnergy = J*lattice[size - 1][j]*(lattice[size - 1][j + 1] + lattice[size - 1][j - 1] + lattice[size - 2][j] + lattice[0][j] - mu*H);
         return FlippedEnergy - InitialEnergy ;
     }
 
-    else if( j==0 ){
+    else if( j == 0 ){
     //        Left egde
         InitialEnergy = -J*lattice[i][0]*(lattice[i][1] + lattice[i-1][0] + lattice[i+1][0] + lattice[i][size-1] - mu*H);
         FlippedEnergy = J*lattice[i][0]*(lattice[i][1] + lattice[i-1][0] + lattice[i+1][0] + lattice[i][size-1] - mu*H);
         return FlippedEnergy - InitialEnergy ;
     }
 
-    else if( j== (size - 1) ){
+    else if( j == (size - 1) ){
     //        Right edge
         InitialEnergy = -J*lattice[i][size - 1]*(lattice[i][size - 2] + lattice[i + 1][size- 1] + lattice[i-1][size - 1] + lattice[i][0] - mu*H);
         FlippedEnergy = J*lattice[i][size - 1]*(lattice[i][size - 2] + lattice[i + 1][size- 1] + lattice[i-1][size - 1] + lattice[i][0] - mu*H);
